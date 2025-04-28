@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: monorail-app
+    container_name: monorail_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - monorail-net
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    image: monorail-dashboard
+    container_name: monorail_dashboard
+    ports:
+      - "8600:8501"
+    environment:
+      - API_URL=http://api:8000
+    networks:
+      - monorail-net
+    depends_on:
+      - api
+
+networks:
+  monorail-net:
+    driver: bridge

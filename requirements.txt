@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+httpx
+pydantic
+slack_sdk
+python-dotenv
+sqlmodel      # ORM for database persistence
+tenacity      # retry functionality
+streamlit     # dashboard UI
+requests
+altair
