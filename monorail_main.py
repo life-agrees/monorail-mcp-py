@@ -16,7 +16,17 @@ from models import init_db, save_failure, get_all_failures
 load_dotenv()
 init_db()
 
+BASE_URL = os.getenv("BASE_URL")
+print(f"🔍 DEBUG at startup: BASE_URL={BASE_URL!r}")
+
 app = FastAPI(title="Monorail MCP Server")
+
+@app.get("/health")
+def health():
+    return {
+        "BASE_URL": BASE_URL,
+        "env_keys": list(os.environ.keys())
+    }
 
 BASE_URL      = os.getenv("BASE_URL")
 SLACK_TOKEN   = os.getenv("SLACK_BOT_TOKEN")
