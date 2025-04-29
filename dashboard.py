@@ -5,8 +5,12 @@ import pandas as pd
 import altair as alt
 from datetime import datetime
 
-
-API_BASE = os.getenv("API_URL", "http://127.0.0.1:8000")
+raw = os.getenv("API_URL", "http://127.0.0.1:8000").strip()
+# remove any accidental leading '='
+if raw.startswith("="):
+    raw = raw.lstrip("=")
+# drop trailing slash just in case
+API_BASE = raw.rstrip("/")
 API_URL  = f"{API_BASE}/failed-trades"
 
 
