@@ -5,8 +5,10 @@ import pandas as pd
 import altair as alt
 from datetime import datetime
 
-API_BASE = os.getenv("API_URL", "http://127.0.0.1:8000")
+API_URL = "http://127.0.0.1:8000/failed-trades"
+API_BASE = os.getenv("API_URL")
 API_URL  = f"{API_BASE}/failed-trades"
+
 
 def main():
     st.set_page_config(page_title="Failed Trades Dashboard", layout="wide")
