@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from typing import Optional
 import traceback
-from fastapi import FastAPI, Body, HTTPException  # Added HTTPException
+from fastapi import FastAPI, Body, HTTPException  
 import httpx
 from pydantic import BaseModel
 from slack_sdk import WebClient
@@ -12,7 +12,7 @@ from utils import safe_json_response
 
 from models import init_db, save_failure, get_all_failures
 
-# ─── Set up ─────────────────────────────────────────────────────────
+#  Set up 
 load_dotenv()
 init_db()
 
@@ -34,7 +34,7 @@ SLACK_TOKEN   = os.getenv("SLACK_BOT_TOKEN")
 slack = WebClient(token=SLACK_TOKEN)
 webhooks: list[str] = []
 
-# ─── Pydantic Payload Model ─────────────────────────────────────────
+# Pydantic Payload Model 
 class TradePayload(BaseModel):
     side: str
     amount: float
@@ -43,7 +43,7 @@ class TradePayload(BaseModel):
     deadline: Optional[int] = 60
     max_hops: Optional[int] = 3
 
-# ─── Helpers ────────────────────────────────────────────────────────
+#  Helpers 
 def is_failure(resp: httpx.Response) -> bool:
     if resp.status_code != 200:
         return True
@@ -68,7 +68,7 @@ def call_webhooks(record: dict):
         except Exception as e:
             print("Webhook failed:", e)
 
-# ─── Endpoints ──────────────────────────────────────────────────────
+#  Endpoints 
 
 @app.get("/quote")
 async def get_quote(
@@ -137,7 +137,7 @@ async def create_trade(
 def failed_trades():
     try:
         trades = get_all_failures()
-        return {"failed_trades": [t.model_dump() for t in trades]}  # Changed from .dict()
+        return {"failed_trades": [t.model_dump() for t in trades]} 
     except Exception as e:
         print(f"Database error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch trades")
