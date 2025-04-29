@@ -13,6 +13,8 @@ API_URL  = f"{API_BASE}/failed-trades"
 def main():
     st.set_page_config(page_title="Failed Trades Dashboard", layout="wide")
     st.title("📉 Monorail MCP Failed Trades Dashboard")
+    st.write("🔍 Fetching from:", repr(API_URL))
+
 
     try:
         resp = requests.get(API_URL)
